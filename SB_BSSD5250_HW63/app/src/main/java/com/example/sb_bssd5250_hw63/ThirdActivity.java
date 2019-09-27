@@ -23,7 +23,7 @@ public class ThirdActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_second);
+        setContentView(R.layout.activity_third);
 
         LinearLayout buttonLL = new LinearLayout(this);
 
@@ -54,6 +54,10 @@ public class ThirdActivity extends AppCompatActivity {
         // add radio group to layout
         buttonLL.addView(rg);
 
+        ConstraintLayout constraintLayout = (ConstraintLayout) findViewById(R.id.third_layout);
+        constraintLayout.addView(buttonLL);
+        constraintLayout.setBackgroundColor(Color.BLUE);
+
         // set up listener
         rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -77,7 +81,7 @@ public class ThirdActivity extends AppCompatActivity {
                     Toast.makeText(ThirdActivity.this,"WordPress Selected" , Toast.LENGTH_LONG).show();
                     color = Color.BLUE;
                 }
-                Intent passableData = new Intent(getApplicationContext(), SecondActivity.class);
+                Intent passableData = new Intent(getApplicationContext(), MainActivity.class);
                 passableData.putExtra( "color", color);
                 startActivityForResult(passableData, 1);
             }

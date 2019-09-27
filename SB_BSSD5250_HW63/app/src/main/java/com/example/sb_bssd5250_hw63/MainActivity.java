@@ -45,19 +45,19 @@ public class MainActivity extends AppCompatActivity {
         buttonLL.addView(internetThings);
         buttonLL.addView(portfolio);
 
-        constraintLayout = (ConstraintLayout) findViewById(R.id.main_layout);
+        ConstraintLayout constraintLayout = (ConstraintLayout) findViewById(R.id.main_layout);
         constraintLayout.addView(buttonLL);
         constraintLayout.setBackgroundColor(Color.GREEN);
     }
 
     @Override
-	    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-	        super.onActivityResult(requestCode, resultCode, data);
-	        if(resultCode == RESULT_OK && requestCode ==1) {
-	            ConstraintLayout constraintLayout = (ConstraintLayout)findViewById(R.id.main_layout);
-	            String msg = data.getStringExtra("message");
-	            ((TextView)constraintLayout.getChildAt(0)).setText(msg);
-	        }
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK && requestCode ==1) {
+            ConstraintLayout constraintLayout = (ConstraintLayout)findViewById(R.id.main_layout);
+            String msg = data.getStringExtra("message");
+            ((TextView)constraintLayout.getChildAt(0)).setText(msg);
+        }
 
     }
 
@@ -65,29 +65,19 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onClick(View view) {
             Intent passableData = new Intent(getApplicationContext(), ThirdActivity.class);
-            passableData.putExtra( "color", color);
+            passableData.putExtra("color", color);
             startActivityForResult(passableData, 1);
-            constraintLayout.setBackgroundColor(color);   // Third Activity dictates background color
+            //constraintLayout.setBackgroundColor(color);   // Third Activity dictates background color
 
         }
-
     };
 
     private View.OnClickListener internetListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Uri uri = Uri.parse("http://elgoog.im");
-            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-            List<ResolveInfo> possibleActivitiesList = getPackageManager()
-                    .queryIntentActivities(intent, PackageManager.MATCH_ALL);
-            Log.d("NMB01", String.valueOf(intent.resolveActivity(getPackageManager())));
-            if(possibleActivitiesList.size() >1) {
-                String title = "Open this site with:";
-                Intent chooser = Intent.createChooser(intent,title);
-                startActivity(chooser);
-            } else if (intent.resolveActivity(getPackageManager()) != null) {
-                startActivity(intent);
-            }
+            Intent intent = new Intent(getApplicationContext(), SecondActivity.class);
+            startActivity(intent);
+            finish();
 
         }
     };
@@ -95,9 +85,10 @@ public class MainActivity extends AppCompatActivity {
     private View.OnClickListener portfolioListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-
+            Intent intent = new Intent(getApplicationContext(), FourthActivity.class);
+            startActivity(intent);
+            finish();
 
         }
     };
-
 }

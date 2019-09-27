@@ -15,12 +15,13 @@ public class FourthActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_second);
+        setContentView(R.layout.activity_fourth);
+
         Button changeActivityButton = new Button(this);
         changeActivityButton.setText("Change Activity");
         changeActivityButton.setOnClickListener(changeActivityListener);
 
-        ConstraintLayout constraintLayout = (ConstraintLayout) findViewById(R.id.second_layout);
+        ConstraintLayout constraintLayout = (ConstraintLayout) findViewById(R.id.fourth_layout);
         constraintLayout.addView(changeActivityButton);
         constraintLayout.setBackgroundColor(Color.YELLOW);
 
