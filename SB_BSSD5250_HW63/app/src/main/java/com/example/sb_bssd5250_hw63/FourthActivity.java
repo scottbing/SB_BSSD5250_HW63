@@ -1,44 +1,86 @@
 package com.example.sb_bssd5250_hw63;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
-import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+
+import java.util.Stack;
 
 public class FourthActivity extends AppCompatActivity {
+    private LinearLayout upperLayout;
+    private LinearLayout lowerLayout;
+    private Stack<ImageButton> gbStack;
+    private char green = 'g';
+    private char red = 'r';
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fourth);
 
-        Button changeActivityButton = new Button(this);
-        changeActivityButton.setText("Change Activity");
-        changeActivityButton.setOnClickListener(changeActivityListener);
+        gbStack = new Stack<>(); // establish the green button stack
 
-        ConstraintLayout constraintLayout = (ConstraintLayout) findViewById(R.id.fourth_layout);
-        constraintLayout.addView(changeActivityButton);
-        constraintLayout.setBackgroundColor(Color.YELLOW);
+        upperLayout = (LinearLayout) findViewById(R.id.upperlayout);
+        lowerLayout = (LinearLayout) findViewById(R.id.lowerlayout);
+        ImageButton imgButton = (ImageButton) findViewById(R.id.imageButton);
+        imgButton.setOnClickListener(gbClickedListener);
+        imgButton.setLayoutParams( new LinearLayout.LayoutParams(
+                75, 75));
 
     }
 
-    private View.OnClickListener changeActivityListener = new View.OnClickListener() {
+    // When a green button is pressed, a new red button will be added  to the
+    // bottom linear layout and a new green button added to the top linear layout.
+    private View.OnClickListener gbClickedListener = new View.OnClickListener() {
+
         @Override
         public void onClick(View view) {
-            Intent dataSent = getIntent();
-            TextView messageText = (TextView) findViewById(R.id.message_text);
-            messageText.setText(dataSent.getStringExtra("message"));
+            // When a green button is pressed, a new red button will be added to the bottom
+            // linear layout and a new green button added to the top linear layout.
+            //((ViewManager)view.getParent()).removeView(view);
+            lowerLayout.addView(CreateImageButton(red));
+            upperLayout.addView(CreateImageButton(green));
 
-            Intent passableData = new Intent();
-            passableData.putExtra("message", "bye");
-            setResult(RESULT_OK,passableData);
-
-            finish();
         }
     };
+
+    // When a red button is pressed, a green button will be removed from the top linearlayout.
+    private View.OnClickListener rbClickedListener = new View.OnClickListener() {
+
+        @Override
+        public void onClick(View view) {
+            // got Java stack implementation from JournalDev article
+            // https://www.journaldev.com/13401/java-stack
+            // When a red button is pressed, a green button will be removed from the top linearlayout.
+
+            // pop from non-empty stack
+            if (!gbStack.isEmpty()) {
+                upperLayout.removeView(gbStack.pop());
+            }
+        }
+    };
+
+    // ImageButton Factory Method
+    private ImageButton CreateImageButton(char color) {
+        ImageButton imgButton;
+        imgButton = new ImageButton(this);
+        imgButton.setBackground(null);
+        if (color == 'g') {
+            imgButton.setImageResource(R.drawable.green);
+            imgButton.setOnClickListener(gbClickedListener);
+        }
+        if (color == 'r') {
+            imgButton.setImageResource(R.drawable.red);
+            imgButton.setOnClickListener(rbClickedListener);
+        }
+        imgButton.setLayoutParams( new LinearLayout.LayoutParams(
+                75, 75));
+        // push it on the stack
+        gbStack.push((ImageButton)imgButton);
+        return imgButton;
+    }
 }
