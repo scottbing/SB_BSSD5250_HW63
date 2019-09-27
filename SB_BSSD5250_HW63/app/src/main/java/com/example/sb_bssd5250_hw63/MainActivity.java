@@ -20,7 +20,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private ConstraintLayout constraintLayout;
-    private int color;
+    private int color = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode == RESULT_OK && requestCode ==1) {
             ConstraintLayout constraintLayout = (ConstraintLayout)findViewById(R.id.main_layout);
-            int color = getIntent().getExtras().getInt("color");
+            int color = data.getIntExtra("color",0);
             constraintLayout.setBackgroundColor(color);   // Third Activity dictates background color
 
         }
@@ -77,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
         public void onClick(View view) {
             Intent intent = new Intent(getApplicationContext(), SecondActivity.class);
             startActivity(intent);
-            finish();
 
         }
     };
@@ -87,7 +86,6 @@ public class MainActivity extends AppCompatActivity {
         public void onClick(View view) {
             Intent intent = new Intent(getApplicationContext(), FourthActivity.class);
             startActivity(intent);
-            finish();
 
         }
     };

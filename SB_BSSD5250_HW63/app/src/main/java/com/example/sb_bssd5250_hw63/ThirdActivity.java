@@ -83,10 +83,14 @@ public class ThirdActivity extends AppCompatActivity {
                     Toast.makeText(ThirdActivity.this,"Color Blue Selected" , Toast.LENGTH_LONG).show();
                     color = Color.BLUE;
                 }
-                Intent passableData = new Intent(getApplicationContext(), MainActivity.class);
+                /*Intent passableData = new Intent(getApplicationContext(), MainActivity.class);
                 passableData.putExtra( "color", color);
                 startActivityForResult(passableData, 1);
+                setResult(RESULT_OK,passableData);*/
+                Intent passableData = new Intent();
+                passableData.putExtra( "color", color);
                 setResult(RESULT_OK,passableData);
+                finish();
             }
         });
     }
