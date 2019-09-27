@@ -20,6 +20,8 @@ public class ThirdActivity extends AppCompatActivity {
     private RadioGroup rg;
     private int color;
 
+    // Code built from:
+    // https://www.android-examples.com/create-radiogroup-dynamically-in-android-with-radio-button/https://www.android-examples.com/create-radiogroup-dynamically-in-android-with-radio-button/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,42 +66,28 @@ public class ThirdActivity extends AppCompatActivity {
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 if(rb1.isChecked()) // Red
                 {
-                    Toast.makeText(ThirdActivity.this,"Android Selected" , Toast.LENGTH_LONG).show();
+                    Toast.makeText(ThirdActivity.this,"Color Red Selected" , Toast.LENGTH_LONG).show();
                     color = Color.RED;
                 }
 
 
                 if(rb2.isChecked()) // Green
                 {
-                    Toast.makeText(ThirdActivity.this,"PHP Selected" , Toast.LENGTH_LONG).show();
+                    Toast.makeText(ThirdActivity.this,"Color Green Selected" , Toast.LENGTH_LONG).show();
                     color= Color.GREEN;
                 }
 
 
                 if(rb3.isChecked()) // Blue
                 {
-                    Toast.makeText(ThirdActivity.this,"WordPress Selected" , Toast.LENGTH_LONG).show();
+                    Toast.makeText(ThirdActivity.this,"Color Blue Selected" , Toast.LENGTH_LONG).show();
                     color = Color.BLUE;
                 }
                 Intent passableData = new Intent(getApplicationContext(), MainActivity.class);
                 passableData.putExtra( "color", color);
                 startActivityForResult(passableData, 1);
+                setResult(RESULT_OK,passableData);
             }
         });
     }
-
-    private View.OnClickListener changeActivityListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            Intent dataSent = getIntent();
-            TextView messageText = (TextView) findViewById(R.id.message_text);
-            messageText.setText(dataSent.getStringExtra("message"));
-
-            Intent passableData = new Intent();
-            passableData.putExtra("message", "bye");
-            setResult(RESULT_OK,passableData);
-
-            finish();
-        }
-    };
 }

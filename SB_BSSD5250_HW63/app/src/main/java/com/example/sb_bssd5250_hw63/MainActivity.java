@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         LinearLayout buttonLL = new LinearLayout(this);
+        buttonLL.setOrientation(LinearLayout.VERTICAL);
 
         Button internetThings = new Button(this);
         internetThings.setText("Internet");
@@ -55,20 +56,19 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode == RESULT_OK && requestCode ==1) {
             ConstraintLayout constraintLayout = (ConstraintLayout)findViewById(R.id.main_layout);
-            String msg = data.getStringExtra("message");
-            ((TextView)constraintLayout.getChildAt(0)).setText(msg);
+            int color = getIntent().getExtras().getInt("color");
+            constraintLayout.setBackgroundColor(color);   // Third Activity dictates background color
+
         }
 
     }
 
-    private View.OnClickListener pickColorListener = new View.OnClickListener() {
+    private final View.OnClickListener pickColorListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             Intent passableData = new Intent(getApplicationContext(), ThirdActivity.class);
             passableData.putExtra("color", color);
             startActivityForResult(passableData, 1);
-            //constraintLayout.setBackgroundColor(color);   // Third Activity dictates background color
-
         }
     };
 
